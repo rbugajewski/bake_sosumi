@@ -116,9 +116,9 @@ if ($file_extension == "mp3")
     die("Could not find mp4info. Please make sure it’s in your path.\n");
   }
 
-shell_exec($mp4tags_command.' -r w -s "'.'#'.$episode.': '.$options['title'].'" -a "'.$options['artist'].'" -A "'.$options['album'].'" -y "'.date('Y').'" -g "'.$options['genre'].'" -c "'.$options['comments'].'" -L "'.$options['comments'].'" -m "'.$options['comments'].'" -t '.$episode.' '.$track_full_filename);
+shell_exec($mp4tags_command.' -r w -s "'.'#'.$episode.': '.$options['title'].'" -a "'.$options['artist'].'" -A "'.$options['album'].'" -y "'.date('Y').'" -g "'.$options['genre'].'" -c "'.$options['comments'].'" -L "'.$options['comments'].'" -m "'.$options['comments'].'" -t '.$episode.' "'.$track_full_filename.'"');
 
-$track_playtime_output = shell_exec($mp4info_command.' '.$track_full_filename.' | sed -n "s/^.*audio.*, \([0-9]*\)\.[0-9]* secs,.*$/\1/p"');
+$track_playtime_output = shell_exec($mp4info_command.' "'.$track_full_filename.'" | sed -n "s/^.*audio.*, \([0-9]*\)\.[0-9]* secs,.*$/\1/p"');
   write_metadata($post_full_filename, $episode, $options['title'], $track_filename, filesize($track_full_filename), minutes(trim($track_playtime_output)), $options['comments'], $comments_suffix);
 }
 
